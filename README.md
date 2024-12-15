@@ -1,94 +1,67 @@
 # YouTube Video Downloader
 
-A simple Python-based YouTube video downloader with a graphical user interface (GUI) built using Tkinter.  This project allows users to download YouTube videos by pasting the video link into the application.
+A simple Python-based YouTube video downloader using `pytube`.  This program provides a graphical user interface (GUI) for easy downloading of YouTube videos.
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 ## Project Overview
 
-This project provides a user-friendly way to download YouTube videos.  The application features a simple GUI that minimizes the technical hurdles for users.  It solves the problem of needing to navigate complex websites or use command-line tools to download videos.  The primary use case is for individuals who want to easily download videos for offline viewing.
+This project aims to create a user-friendly application for downloading YouTube videos.  It leverages the `pytube` library to handle the video downloading process, abstracting away the complexities of interacting with the YouTube API. The application features a simple GUI built using Tkinter.
+
+**Key Features:**
+
+*   Simple and intuitive graphical user interface (GUI) built with Tkinter.
+*   Uses the `pytube` library for efficient and reliable video downloading.
+*   Allows users to download videos by pasting the YouTube video URL.
 
 
 ## Table of Contents
 
-* [Prerequisites](#prerequisites)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Project Architecture](#project-architecture)
-* [License](#license)
+*   [Prerequisites](#prerequisites)
+*   [Installation](#installation)
+*   [Usage](#usage)
+*   [Code Overview](#code-overview)
+*   [License](#license)
 
 
 ## Prerequisites
 
-* Python 3.x
-* `pytube` library
-
-```bash
-pip install pytube
-```
+*   Python 3.x
+*   `pytube` library:  This can be installed using `pip install pytube`
 
 ## Installation
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/harshkasat/Youtube-video-download.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd Youtube-video-download
-```
-
-3. Install the required library (if not already installed):
-
-```bash
-pip install pytube
-```
+1.  Clone the repository: `git clone https://github.com/harshkasat/Youtube-video-download.git`
+2.  Navigate to the project directory: `cd Youtube-video-download`
+3.  Install the required library: `pip install pytube`
 
 
 ## Usage
 
-1. Run the `youtube-downloader.py` script:
+1.  Run the `youtube-downloader.py` script.  This will open a GUI window.
+2.  Paste the YouTube video URL into the provided entry field.
+3.  Click the "Download" button.  The video will be downloaded to the same directory as the script.
 
-```bash
-python youtube-downloader.py
-```
 
-2. A GUI window will appear. Paste the YouTube video link into the provided entry field.
+## Code Overview
 
-3. Click the "Download" button.  The video will be downloaded to the same directory as the script.  A "Downloaded" label will appear to confirm completion.
+The core logic resides in `youtube-downloader.py`.  The GUI is created using Tkinter, and the `pytube` library handles the video download.
 
-## Project Architecture
+**Key functions:**
 
-The project consists of a single Python file (`youtube-downloader.py`) that uses the `Tkinter` library for the GUI and the `pytube` library for downloading videos.  The application's logic is straightforward: it takes a YouTube link as input, uses `pytube` to fetch the video stream, and then downloads the highest-quality available stream.
+*   `download()`: This function is called when the "Download" button is pressed. It retrieves the URL from the entry field, uses `pytube` to download the highest resolution video available, and displays a "Downloaded" message.
 
 
 ```python
-from tkinter import Tk, Label, Entry, Button, StringVar
-from pytube import YouTube
-
-# Create the main window
-root = Tk()
-root.geometry('500x300')
-root.resizable(0, 0)
-root.title('YouTube Downloader')
-
-# ... (GUI elements as shown in the provided code) ...
-
 def download():
-    try:
-        url = YouTube(str(link.get()))
-        video = url.streams.first() #Downloads the highest quality by default.  Could be improved to allow user selection.
-        video.download()
-        Label(root, text="Downloaded", font="arial 15").place(x=100, y=120)
-    except Exception as e:
-        Label(root, text=f"Error: {e}", font="arial 15", fg="red").place(x=100, y=120)
-
-# ... (rest of the GUI code) ...
+    url = YouTube(str(link.get()))
+    video = url.streams.first()
+    video.download()
+    Label(root, text="Downloaded", font="arial 15").place(x=100, y=120)
 ```
+
+The `url.streams.first()` line downloads the first stream found (usually the highest resolution).  For more control over the download quality, you could modify this line to select a specific stream based on resolution or file type.  Refer to the `pytube` documentation for more details.
 
 
 ## License
